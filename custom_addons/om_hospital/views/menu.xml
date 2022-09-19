@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <menuitem id="hospital_root"
+               name="Hospital"
+               sequence="0"
+               web_icon="om_hospital,static/description/icon.png"/>
+
+    <menuitem id="patient_master"
+              name="Patient Details"
+              parent="hospital_root"
+              sequence="0"/>
+
+    <menuitem id="hospital_patient"
+              name="Patients"
+              parent="patient_master"
+              action="action_patient"
+              sequence="0"/>
+
+    <menuitem id="menu_appointment"
+              name="Appointments"
+              parent="hospital_root"
+              action="action_hospital_appointment"
+              sequence="10"/>
+
+    <menuitem id="hospital_female_patient"
+              name="Female Patients"
+              parent="patient_master"
+              action="action_female_patient"
+              sequence="20"/>
+
+
+
+
+
+
+
+
+</odoo>

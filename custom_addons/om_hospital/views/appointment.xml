@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <!--    tree view of the patient model-->
+    <record id="patient_appointment_tree" model="ir.ui.view">
+        <field name="name">hospital.appointment.tree</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <tree string="Patients" decoration-success="state == 'done'"
+                  decoration-info="state in ('draft', 'in_progress')" decoration-danger="state == 'cancel'">
+                <field name="patient_id"/>
+                <field name="appointment_time"/>
+                <field name="booking_date" optional="show"/>
+                <field name="activity_ids" widget="list_activity"/>
+                <field name="gender" optional="hide"/>
+                <field name="patient_age" optional="hide"/>
+                <field name="state" decoration-success="state == 'done'"
+                       decoration-info="state in ('draft', 'in_progress')" decoration-danger="state == 'cancel'"
+                       widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    form view of the patient model-->
+    <record id="patient_appointment_form" model="ir.ui.view">
+        <field name="name">hospital.appointment.form</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Patients">
+                <header>
+                    <field name="state" widget="statusbar" nolabel="1" options="{'clickable': '1'}"
+                           statusbar_visible="draft,in_progress,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="priority" widget="priority" class="mr-3"/>
+                            <field name="patient_id" placeholder="Manufacturing Reference" nolabel="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="appointment_time"/>
+                            <field name="booking_date"/>
+                        </group>
+                        <group>
+                            <field name="gender"/>
+                            <field name="patient_age"/>
+                            <button name="action_progress" string="Start Progress" type="object" class="oe_highlight"/>
+                            <button name="%(om_hospital.action_patient)d" string="Done"
+                                    confirm="Are you sure?" help="On clicking this, will go to patients records"
+                                    type="action" class="oe_highlight"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Prescription" name="prescription">
+                            <field name="prescription" placeholder="Enter your Prescription"/>
+
+                        </page>
+                        <page string="Pharmacy" name="pharmacy">
+                            <field name="prescription" placeholder="Enter your Prescription"/>
+                        </page>
+                    </notebook>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="message_follower"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--    action of the patients menu-->
+    <record id="action_hospital_appointment" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create First Appointment !
+            </p>
+        </field>
+    </record>
+
+
+</odoo>
